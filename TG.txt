@@ -1,0 +1,55 @@
+Transit Gateway: 
+================
+is nothing but it is the centre point of  connecting the multiple vpc in same region
+if its in different region in same account then need to do transit gateway peering like similar to vpc peering and also if its in different region in different aws account same thing need to do transit gateway peering 
+===============
+Pre-requsites:
+==================
+2 or more VPC and required subnets,Igw etc.
+
+but in this case:
+================
+create 3 vpc in the same region ireland
+vpc1--->10.150.0.0/16 and one public subnet and one private subnet
+vpc2--->10.160.0.0/16 and one public subnet and one private subnet
+vpc3--->10.170.0.0/16 and one public subnet and one private subnet
+
+after that attached igw to only for vpc-1
+========================================
+after that created ec2 instance in vpc-1 under public subnet
+after that created one more ec2 instance in vpc-2 under private subnet
+after that created one more ec2 instance in vpc-3 under private subnet
+
+steps to create transit gateway
+===============================
+step1:
+=====
+create a transit gateway and wait for available state
+
+step2:
+=====
+create a transit gateway attachment and select attachment type
+types are
+vpc
+vpn
+peering connection
+connect
+and wait for available state
+
+step3:
+======
+cross verify the attachment and propogation in transit gateway route tables
+
+step4:
+=====
+go to each public and private route table vpc1 , vpc2 and vpc3 and
+attach destination address to connect from 
+vpc1 to vpc2 and vpc3
+vpc2 to vpc3 and vpc1
+vpc3 to vpc2 and vpc1
+
+step5:
+=======
+aftet that login to ec2 machine which is hosted in vpc1 under public subnet and connect (ssh to machine2 in vpc2 and also machine3 in vpc3) the
+ec2 hosted in private ec2 in vpc2
+cross verify
